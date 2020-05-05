@@ -11,9 +11,9 @@ stages:
       displayName: 'Generate Makefile'
     - script: cd Build && make -j 3 CXX=g++-7 CC=gcc-7 config=release_x64
       displayName: 'Build project'
-    - script: mv $(Build.SourcesDirectory)/Bin/Release/libml_NAME.so $(Build.SourcesDirectory)/Bin/Release/ml_NAME.so
-    - publish: '$(Build.SourcesDirectory)/Bin/Release/ml_NAME.so'
-      artifact: 'ml_NAME_linux'
+    - script: mv $(Build.SourcesDirectory)/Bin/Release/libml_sysutils.so $(Build.SourcesDirectory)/Bin/Release/ml_sysutils.so
+    - publish: '$(Build.SourcesDirectory)/Bin/Release/ml_sysutils.so'
+      artifact: 'ml_sysutils_linux'
   - job: Windows
     pool:
       vmImage: 'windows-2019'
@@ -37,6 +37,6 @@ stages:
         solution: '$(solution)'
         configuration: '$(buildConfiguration)'
         platform: '$(platform)'
-    - script: move /Y $(Build.SourcesDirectory)\Bin\Release\ml_NAME.dll $(Build.SourcesDirectory)\Bin\Release\ml_NAME_$(platform).dll
-    - publish: '$(Build.SourcesDirectory)\Bin\Release\ml_NAME_$(platform).dll'
-      artifact: 'ml_NAME_$(platform)'
+    - script: move /Y $(Build.SourcesDirectory)\Bin\Release\ml_sysutils.dll $(Build.SourcesDirectory)\Bin\Release\ml_sysutils_$(platform).dll
+    - publish: '$(Build.SourcesDirectory)\Bin\Release\ml_sysutils_$(platform).dll'
+      artifact: 'ml_sysutils_$(platform)'

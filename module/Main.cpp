@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "LunaExampleClass.h"
 #include "LunaExampleClassHelper.h"
+#include <cstring>
 
 #ifndef WIN32
 	#include "luaimports/luaimports.linux.h"
@@ -21,8 +22,8 @@ MTAEXPORT bool InitModule(ILuaModuleManager10* pManager, char* szModuleName, cha
     pModuleManager = pManager;
 
 	// Set the module info
-    const auto module_name	= "NAME";
-    const auto author		= "AUTHOR";
+    const auto module_name	= "System Utilities Module";
+    const auto author		= "4O4 <pk.pawelo@gmail.com>";
 	std::memcpy(szModuleName, module_name,	MAX_INFO_LENGTH);
 	std::memcpy(szAuthor,     author,		MAX_INFO_LENGTH);
 	*fVersion = 1.0f;
@@ -34,16 +35,18 @@ MTAEXPORT bool InitModule(ILuaModuleManager10* pManager, char* szModuleName, cha
     return true;
 }
 
-MTAEXPORT void RegisterFunctions(lua_State* lua_vm)
+MTAEXPORT void RegisterFunctions(lua_State* luaVM)
 {
-	if (!pModuleManager || !lua_vm)
+	if (!pModuleManager || !luaVM)
 		return;
 
 	// Add lua vm to states list (to check validity)
-	g_Module->AddLuaVM(lua_vm);
+	g_Module->AddLuaVM(luaVM);
 
 	// Register luna classes
-	LunaExampleClassHelper::Register(lua_vm);
+	// LunaExampleClassHelper::Register(luaVM);
+	pModuleManager->RegisterFunction(luaVM, "executeSystemCommand", &CFunctions::ExecuteSystemCommand);
+	pModuleManager->RegisterFunction(luaVM, "getSystemEnvVariable", &CFunctions::GetSystemEnvVariable);
 }
 
 MTAEXPORT bool DoPulse()

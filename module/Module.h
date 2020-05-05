@@ -23,15 +23,15 @@ public:
 	inline void RemoveLuaVM(lua_State* luaVM) { _luaStates.erase(luaVM); }
 	inline bool HasLuaVM(lua_State* luaVM) { return _luaStates.find(luaVM) != _luaStates.end(); }
 
-	inline JobManager<const std::optional<std::any>>& GetJobManager() { return _jobManager; }
+	inline JobManager<const std::any>& GetJobManager() { return (_jobManager); }
 
 	static void register_lua_global(lua_State* lua_vm, const char* name, void* value);
 	static void register_table_function(lua_State* lua_vm, const char* function_name, lua_CFunction function);
-	static void register_class(lua_State* lua_vm, const char* metatable, const luaL_Reg* registry);
+	// static void register_class(lua_State* lua_vm, const char* metatable, const luaL_Reg* registry);
 	
 private:
 	ILuaModuleManager* _moduleManager;
-	JobManager<const std::optional<std::any>> _jobManager;
+	JobManager<const std::any> _jobManager;
 	std::unordered_set<lua_State*> _luaStates;
 };
 

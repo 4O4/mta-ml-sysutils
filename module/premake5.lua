@@ -2,7 +2,7 @@ project "module"
 	language "C++"
 	cppdialect "C++17"
 	kind "SharedLib"
-	targetname "ml_base"
+	targetname "ml_sysutils"
 	
 	includedirs { "include" }
 	libdirs { "lib" }
